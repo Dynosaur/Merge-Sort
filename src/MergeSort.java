@@ -33,10 +33,30 @@ public class MergeSort {
         System.out.println("Merged List: " + list);
     }
 
+    // Uses the merge sort algorithm to sort two separate lists
+    public static ArrayList<Comparable> mergeSort(ArrayList<Comparable> listA, ArrayList<Comparable> listB) {
+
+        System.out.println( "List A:\n\t" +
+                            "Length: " + listA.size() + "\n\t" +
+                            "Values: " + listA + "\n" +
+                            "List B:\n\t" +
+                            "Length: " + listB.size() + "\n\t" +
+                            "Values: "+ listB + "\n"
+                            );
+        selectionSort(listA);
+        selectionSort(listB);
+
+        ArrayList<Comparable> mergedList = merge(listA, listB);
+
+        System.out.println("Merged List: " + mergedList);
+
+        return new ArrayList<>(merge(listA, listB));
+    }
+
     // Uses the selection sort to sort a list
     public static void selectionSort(ArrayList<Comparable> list) {
 
-        System.out.println("\tOriginal List: " + list);
+        System.out.println("Original List:\t" + list);
 
         int smallestIndex;
         Comparable temp;
@@ -55,7 +75,7 @@ public class MergeSort {
 
         }
 
-        System.out.println("\t\tSorted List: " + list);
+        System.out.println("Sorted List:\t" + list + "\n");
     }
 
     /**
@@ -72,6 +92,14 @@ public class MergeSort {
         return newList;
     }
 
+    /**
+     * Sorts through two sorted lists and combines them into one list. This will only work if BOTH lists
+     * are sorted from least to greatest.
+     *
+     * @param   listA The first sorted list
+     * @param   listB The second sorted list
+     * @return  A sorted list, least to greatest, that contains both lists' values
+     */
     public static ArrayList<Comparable> merge(ArrayList<Comparable> listA, ArrayList<Comparable> listB) {
         ArrayList<Comparable> newList = new ArrayList<>();
         ListIterator<Comparable> listAIt = listA.listIterator();
@@ -100,13 +128,12 @@ public class MergeSort {
     }
 
     // <editor-fold defaultstate="collapsed" desc="Genesis Methods">
-    /**
-     * Generates a random list of 10 integers, ranging from 0 to 10.
-     *
-     * @return A list populated with random integers.
-     */
     public static ArrayList<Comparable> generateList() {
         return generateList(10, 0, 10);
+    }
+
+    public static ArrayList<Comparable> generateList(int size, int max) {
+        return generateList(size, 0, max);
     }
 
     /**
@@ -141,9 +168,8 @@ public class MergeSort {
     // </editor-fold>
 
     public static void main(String[] args) {
-        ArrayList<Comparable> list = generateList();    // Create a randomly generated list
-        mergeSort(new ArrayList<>(list));               // Merge sort a copy of the list, as to allow us to reuse this list
-        selectionSort(new ArrayList<>(list));           // Use selection sort to check if the merge sort is correct
+        // Use merge sort on two randomly generated lists with lengths varying from 1 to 20, and values from 0 to 20
+        mergeSort(generateList(random(1, 20), 20), generateList(random(1, 20),20));
     }
 
 }
